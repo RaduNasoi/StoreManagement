@@ -30,12 +30,13 @@ public class ProductService {
     }
 
     public Product getProductById(Long id) {
-        log.info(GET_PRODUCT_BY_ID, id);
-        return repository.findById(id).orElseThrow(
-                () -> {
-                    log.error(PRODUCT_NOT_FOUND, id);
-                    return new ProductNotFoundException(PRODUCT_NOT_FOUND_ERROR_MESSAGE);
-                });
+        return repository.findById(id).map(product -> {
+            log.info(GET_PRODUCT_BY_ID, id);
+            return product;
+        }).orElseThrow(() -> {
+            log.error(PRODUCT_NOT_FOUND, id);
+            return new ProductNotFoundException(PRODUCT_NOT_FOUND_ERROR_MESSAGE);
+        });
     }
 
     public List<Product> getAll() {
@@ -54,5 +55,12 @@ public class ProductService {
         Product product = getProductById(id);
         product.setQuantity(quantity);
         return repository.save(product);
+    }
+
+    public void removeProduct(Long id) {
+        log.info(DELETE_PRODUCT, id);
+        Product product = getProductById(id);
+        repository.delete(product);
+        log.debug(DELETED_PRODUCT, id);
     }
 }

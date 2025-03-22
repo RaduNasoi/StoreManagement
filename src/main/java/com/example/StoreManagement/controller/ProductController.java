@@ -51,8 +51,14 @@ public class ProductController {
 
     @PatchMapping("/{id}/quantity")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ResponseProductDto> changeQuantity(@PathVariable Long id, @RequestParam int quantity) {
+    public ResponseEntity<ResponseProductDto> changeQuantity(@PathVariable Long id, @RequestParam Integer quantity) {
         Product product = productService.changeQuantity(id, quantity);
         return ResponseEntity.ok(productMapper.toResponseProductDto(product));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        productService.removeProduct(id);
+        return ResponseEntity.noContent().build();
     }
 }

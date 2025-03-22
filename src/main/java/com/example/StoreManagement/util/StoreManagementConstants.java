@@ -7,8 +7,10 @@ public class StoreManagementConstants {
     public static final String ROLE = "role";
     public static final String USERNAME = "username";
     public static final String ADDING_PRODUCT = "Adding product: {}";
+    public static final String DELETE_PRODUCT = "Delete product: {}";
     public static final String SAVED_PRODUCT = "Saved product: {}";
     public static final String GET_PRODUCT_BY_ID = "Get product by id: {}";
     public static final String CHANGING_PRICE = "Changing price for product ID {} to {}";
     public static final String CHANGING_QUANTITY = "Changing quantity for product ID {} to {}";
+    public static final String DELETED_PRODUCT = "Product with ID {} has been deleted";
 }
