@@ -3,18 +3,16 @@ package com.example.StoreManagement.service;
 import com.example.StoreManagement.dto.RequestProductDto;
 import com.example.StoreManagement.model.Product;
 import com.example.StoreManagement.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository repository;
-
-    public ProductService(ProductRepository repository) {
-        this.repository = repository;
-    }
 
     public Product addProduct(RequestProductDto dto) {
         Product product = new Product();
