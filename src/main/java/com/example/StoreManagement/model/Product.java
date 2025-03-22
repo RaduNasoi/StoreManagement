@@ -22,7 +22,7 @@ public class Product {
     private Long id;
     private String name;
     private BigDecimal price;
-    private int quantity;
+    private Integer quantity;
     private String description;
     private String categoryName;
     private String internalCode;

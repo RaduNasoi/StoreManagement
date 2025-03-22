@@ -10,7 +10,5 @@ import java.math.BigDecimal;
 public record RequestProductDto(
     @NotBlank String name,
     @NotNull @Positive BigDecimal price,
-    @Min(0) int quantity,
-    String description,
-    String category
+    @Min(0) Integer quantity
 ) {}
