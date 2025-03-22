@@ -4,6 +4,7 @@ import com.example.StoreManagement.dto.LoginRequestDto;
 import com.example.StoreManagement.model.User;
 import com.example.StoreManagement.service.UserService;
 import com.example.StoreManagement.util.JwtUtil;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDto loginRequestDto) {
         Optional<User> user = userService.getUserByUsername(loginRequestDto.username());
         if (user.isPresent() && loginRequestDto.password().equals(user.get().getPassword())) {
             String token = jwtUtil.generateToken(user.get());

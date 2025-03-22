@@ -3,6 +3,7 @@ package com.example.StoreManagement.controller;
 import com.example.StoreManagement.dto.RequestProductDto;
 import com.example.StoreManagement.model.Product;
 import com.example.StoreManagement.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +20,7 @@ public class ProductController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Product> addProduct(@RequestBody RequestProductDto dto) {
+    public ResponseEntity<Product> addProduct(@RequestBody @Valid RequestProductDto dto) {
         return ResponseEntity.ok(service.addProduct(dto));
     }
 
