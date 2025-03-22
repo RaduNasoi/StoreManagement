@@ -2,6 +2,7 @@ package com.example.StoreManagement.service;
 
 import com.example.StoreManagement.dto.RequestProductDto;
 import com.example.StoreManagement.exceptions.ProductNotFoundException;
+import com.example.StoreManagement.mapper.ProductMapper;
 import com.example.StoreManagement.model.Product;
 import com.example.StoreManagement.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +20,11 @@ import static com.example.StoreManagement.util.StoreManagementConstants.*;
 public class ProductService {
 
     private final ProductRepository repository;
+    private final ProductMapper productMapper;
 
     public Product addProduct(RequestProductDto dto) {
         log.info(ADDING_PRODUCT, dto.name());
-        Product product = new Product();
-        product.setPrice(dto.price());
-        product.setName(dto.name());
-        product.setDescription(dto.description());
+        Product product = productMapper.toProduct(dto);
         log.debug(SAVED_PRODUCT, product);
         return repository.save(product);
     }
@@ -50,7 +49,7 @@ public class ProductService {
         return repository.save(product);
     }
 
-    public Product changeQuantity(Long id, int quantity) {
+    public Product changeQuantity(Long id, Integer quantity) {
         log.info(CHANGING_QUANTITY, id, quantity);
         Product product = getProductById(id);
         product.setQuantity(quantity);

@@ -1,6 +1,8 @@
 package com.example.StoreManagement.controller;
 
 import com.example.StoreManagement.dto.RequestProductDto;
+import com.example.StoreManagement.dto.ResponseProductDto;
+import com.example.StoreManagement.mapper.ProductMapper;
 import com.example.StoreManagement.model.Product;
 import com.example.StoreManagement.service.ProductService;
 import jakarta.validation.Valid;
@@ -16,38 +18,41 @@ import java.util.List;
 @RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController {
-    private final ProductService service;
+    private final ProductService productService;
+    private final ProductMapper productMapper;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Product> addProduct(@RequestBody @Valid RequestProductDto dto) {
-        return ResponseEntity.ok(service.addProduct(dto));
+    public ResponseEntity<ResponseProductDto> addProduct(@RequestBody @Valid RequestProductDto dto) {
+        return ResponseEntity.ok(productMapper.toResponseProductDto(productService.addProduct(dto)));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        if (service.getProductById(id) != null) {
-            return ResponseEntity.ok(service.getProductById(id));
+    public ResponseEntity<ResponseProductDto> getProductById(@PathVariable Long id) {
+        if (productService.getProductById(id) != null) {
+            return ResponseEntity.ok(productMapper.toResponseProductDto(productService.getProductById(id)));
         }
         return ResponseEntity.notFound().build();
     }
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public ResponseEntity<List<Product>> getAllProducts() {
-        return ResponseEntity.ok(service.getAll());
+    public ResponseEntity<List<ResponseProductDto>> getAllProducts() {
+        return ResponseEntity.ok(productMapper.toListOfResponseProductDto(productService.getAll()));
     }
 
     @PatchMapping("/{id}/price")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Product> changePrice(@PathVariable Long id, @RequestParam BigDecimal price) {
-        return ResponseEntity.ok(service.changePrice(id, price));
+    public ResponseEntity<ResponseProductDto> changePrice(@PathVariable Long id, @RequestParam BigDecimal price) {
+        Product product = productService.changePrice(id, price);
+        return ResponseEntity.ok(productMapper.toResponseProductDto(product));
     }
 
     @PatchMapping("/{id}/quantity")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Product> changeQuantity(@PathVariable Long id, @RequestParam int quantity) {
-        return ResponseEntity.ok(service.changeQuantity(id, quantity));
+    public ResponseEntity<ResponseProductDto> changeQuantity(@PathVariable Long id, @RequestParam int quantity) {
+        Product product = productService.changeQuantity(id, quantity);
+        return ResponseEntity.ok(productMapper.toResponseProductDto(product));
     }
 }
