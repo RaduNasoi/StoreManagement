@@ -1,5 +1,6 @@
 package com.example.StoreManagement.util;
 
+import com.example.StoreManagement.exceptions.TokenExpiredException;
 import com.example.StoreManagement.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -9,8 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-import static com.example.StoreManagement.util.StoreManagementConstants.ROLE;
-import static com.example.StoreManagement.util.StoreManagementConstants.USERNAME;
+import static com.example.StoreManagement.util.StoreManagementConstants.*;
 
 @Component
 public class JwtUtil {
@@ -28,10 +28,15 @@ public class JwtUtil {
     }
 
     public Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(SECRET_KEY.getBytes())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(SECRET_KEY.getBytes())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception ex) {
+            throw new TokenExpiredException(TOKEN_EXPIRED);
+        }
+
     }
 }
