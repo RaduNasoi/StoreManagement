@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,10 @@ public class ProductService {
         product.setName(dto.name());
         product.setDescription(dto.description());
         return repository.save(product);
+    }
+
+    public Optional<Product> getProductById(Long id) {
+        return repository.findById(id);
     }
 
     public List<Product> getAll() {

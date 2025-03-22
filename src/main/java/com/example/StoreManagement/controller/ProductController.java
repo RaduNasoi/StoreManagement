@@ -24,6 +24,15 @@ public class ProductController {
         return ResponseEntity.ok(service.addProduct(dto));
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        if (service.getProductById(id).isPresent()) {
+            return ResponseEntity.ok(service.getProductById(id).get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<List<Product>> getAllProducts() {
