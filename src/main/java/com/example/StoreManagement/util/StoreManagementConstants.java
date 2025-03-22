@@ -14,4 +14,8 @@ public class StoreManagementConstants {
     public static final String CHANGING_QUANTITY = "Changing quantity for product ID {} to {}";
     public static final String DELETED_PRODUCT = "Product with ID {} has been deleted";
     public static final String TOKEN_EXPIRED = "Token is expired";
+    public static final String ERROR = "error";
+    public static final String NOT_FOUND = "Not Found";
+    public static final String INTERNAL_SERVER_ERROR = "Internal Server Error";
+    public static final String MESSAGE = "message";
 }

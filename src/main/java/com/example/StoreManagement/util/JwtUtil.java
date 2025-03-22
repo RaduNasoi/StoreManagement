@@ -3,6 +3,7 @@ package com.example.StoreManagement.util;
 import com.example.StoreManagement.exceptions.TokenExpiredException;
 import com.example.StoreManagement.model.User;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -34,9 +35,8 @@ public class JwtUtil {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-        } catch (Exception ex) {
+        } catch (ExpiredJwtException ex) {
             throw new TokenExpiredException(TOKEN_EXPIRED);
         }
-
     }
 }
