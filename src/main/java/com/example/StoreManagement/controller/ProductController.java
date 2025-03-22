@@ -27,8 +27,8 @@ public class ProductController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        if (service.getProductById(id).isPresent()) {
-            return ResponseEntity.ok(service.getProductById(id).get());
+        if (service.getProductById(id) != null) {
+            return ResponseEntity.ok(service.getProductById(id));
         }
         return ResponseEntity.notFound().build();
     }
@@ -43,5 +43,11 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> changePrice(@PathVariable Long id, @RequestParam BigDecimal price) {
         return ResponseEntity.ok(service.changePrice(id, price));
+    }
+
+    @PatchMapping("/{id}/quantity")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Product> changeQuantity(@PathVariable Long id, @RequestParam int quantity) {
+        return ResponseEntity.ok(service.changeQuantity(id, quantity));
     }
 }

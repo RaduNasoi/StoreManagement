@@ -1,30 +1,42 @@
 package com.example.StoreManagement.service;
 
 import com.example.StoreManagement.dto.RequestProductDto;
+import com.example.StoreManagement.exceptions.ProductNotFoundException;
 import com.example.StoreManagement.model.Product;
 import com.example.StoreManagement.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
+import static com.example.StoreManagement.util.StoreManagementConstants.*;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductService {
+
     private final ProductRepository repository;
 
     public Product addProduct(RequestProductDto dto) {
+        log.info(ADDING_PRODUCT, dto.name());
         Product product = new Product();
         product.setPrice(dto.price());
         product.setName(dto.name());
         product.setDescription(dto.description());
+        log.debug(SAVED_PRODUCT, product);
         return repository.save(product);
     }
 
-    public Optional<Product> getProductById(Long id) {
-        return repository.findById(id);
+    public Product getProductById(Long id) {
+        log.info(GET_PRODUCT_BY_ID, id);
+        return repository.findById(id).orElseThrow(
+                () -> {
+                    log.error(PRODUCT_NOT_FOUND, id);
+                    return new ProductNotFoundException(PRODUCT_NOT_FOUND_ERROR_MESSAGE);
+                });
     }
 
     public List<Product> getAll() {
@@ -32,8 +44,16 @@ public class ProductService {
     }
 
     public Product changePrice(Long id, BigDecimal price) {
-        Product product = repository.findById(id).orElseThrow();
+        log.info(CHANGING_PRICE, id, price);
+        Product product = getProductById(id);
         product.setPrice(price);
+        return repository.save(product);
+    }
+
+    public Product changeQuantity(Long id, int quantity) {
+        log.info(CHANGING_QUANTITY, id, quantity);
+        Product product = getProductById(id);
+        product.setQuantity(quantity);
         return repository.save(product);
     }
 }

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+import static com.example.StoreManagement.util.StoreManagementConstants.ROLE;
+import static com.example.StoreManagement.util.StoreManagementConstants.USERNAME;
+
 @Component
 public class JwtUtil {
     private final String SECRET_KEY = "aVeryLongSecretKeyThatIsAVeryLongSecretKey!@#%";
@@ -16,8 +19,8 @@ public class JwtUtil {
     public String generateToken(User user) {
         return Jwts.builder()
                 .setSubject(user.getId().toString())
-                .claim("username", user.getUsername())
-                .claim("role", user.getRole())
+                .claim(USERNAME, user.getUsername())
+                .claim(ROLE, user.getRole())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15)) // 15 minutes
                 .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()), SignatureAlgorithm.HS256)

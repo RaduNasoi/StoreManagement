@@ -6,14 +6,14 @@ import com.example.StoreManagement.service.UserService;
 import com.example.StoreManagement.util.JwtUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -24,13 +24,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDto loginRequestDto) {
-        Optional<User> user = userService.getUserByUsername(loginRequestDto.username());
-        if (user.isPresent() && loginRequestDto.password().equals(user.get().getPassword())) {
-            String token = jwtUtil.generateToken(user.get());
+        User user = userService.getUserByUsername(loginRequestDto.username());
+        if (user != null && loginRequestDto.password().equals(user.getPassword())) {
+            String token = jwtUtil.generateToken(user);
             return ResponseEntity.ok(token);
         } else {
             return ResponseEntity.notFound().build();
         }
-
     }
 }
