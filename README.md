@@ -12,7 +12,8 @@ This is a Java Spring Boot application for managing store products and authentic
 - ✅ Basic authentication via JWT
 - ✅ Role-based endpoint security
 - ✅ In-memory H2 database for quick development/testing
-- ✅ Clean architecture with services, DTOs, and mappers
+- ✅ Clean architecture with controllers, services, repositories, DTOs, and mappers
+- ✅ Unit tests
 - ✅ Integration tests with `MockMvc`
 
 ---
