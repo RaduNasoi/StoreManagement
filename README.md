@@ -38,25 +38,25 @@ On application startup we are inserting 2 mock users which would serve as alread
 1. A user logs in with `/api/auth/login` using a `username` and `password`.
 2. If credentials are valid, the API returns a **JWT token**.
 3. The client uses this token as a **Bearer** token in the `Authorization` header for protected endpoints.
-4. The **JWT token** expires in 15 minutes so the token which will be give as examples below are just as examples.
+4. The **JWT token** expires in 15 minutes so the token which will be given as examples below are not working (need to generate another one).
 
 ---
 
 ### 🔒 Role-Based Access
 
-| Endpoint                    | Access         | Method |
-|----------------------------|----------------|--------|
-| `/products` (POST)         | Admin only     | `POST` |
-| `/products` (GET)          | Admin, User    | `GET`  |
-| `/products/{id}`           | Admin, User    | `GET`  |
-| `/products/{id}/price`     | Admin only     | `PATCH` |
-| `/products/{id}/quantity`  | Admin only     | `PATCH` |
-| `/products/{id}`           | Admin only     | `DELETE` |
-| `/api/auth/login`          | Public         | `POST` |
+| Endpoint                  | Access         | Method |
+|---------------------------|----------------|--------|
+| `/products`               | Admin only     | `POST` |
+| `/products`               | Admin, User    | `GET`  |
+| `/products/{id}`          | Admin, User    | `GET`  |
+| `/products/{id}/price`    | Admin only     | `PATCH` |
+| `/products/{id}/quantity` | Admin only     | `PATCH` |
+| `/products/{id}`          | Admin only     | `DELETE` |
+| `/api/auth/login`         | Public         | `POST` |
 
 ---
 
-## 📦 Sample Payloads
+## 📦 Request Samples
 
 ### 🔐 Login
 
