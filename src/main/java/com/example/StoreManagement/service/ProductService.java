@@ -40,7 +40,9 @@ public class ProductService {
     }
 
     public List<Product> getAll() {
-        return repository.findAll();
+        List<Product> products = repository.findAll();
+        log.info("Retrieved {} products", products.size());
+        return products;
     }
 
     public Product changePrice(Long id, BigDecimal price) {
