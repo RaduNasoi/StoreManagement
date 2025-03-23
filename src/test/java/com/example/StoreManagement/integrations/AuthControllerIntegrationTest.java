@@ -1,7 +1,5 @@
 package com.example.StoreManagement.integrations;
 
-import com.example.StoreManagement.service.UserService;
-import com.example.StoreManagement.util.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,12 +16,6 @@ class AuthControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    private UserService userService;
 
     @Test
     void shouldReturnJwtTokenForValidCredentials() throws Exception {

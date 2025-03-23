@@ -1,7 +1,5 @@
 package com.example.StoreManagement.integrations;
 
-import com.example.StoreManagement.mapper.ProductMapper;
-import com.example.StoreManagement.service.ProductService;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -28,12 +26,6 @@ class ProductControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private ProductMapper productMapper;
 
     @Test
     @WithMockUser(roles = "ADMIN")
